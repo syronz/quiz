@@ -1,0 +1,51 @@
+<section class="content ng-scope" id="printThis">
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<d>New Quiz</d>
+		</div>
+		<div class="panel-body">
+
+			<div class="col-md-4 col-md-offset-4">
+				<div class="form-group">
+					<label for="lecture" class="control-label"><d>lecture</d>:</label>
+					<select class="form-control" id="lecture" ng-model="quiz.id_lecture">
+						<option ng-repeat="lecture in lectureList" value="{{lecture.id}}">{{lecture.name}}</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label for="grade" class="control-label"><d>Grade</d>:</label>
+					<select class="form-control" id="grade" ng-model="quiz.id_grade">
+						<option ng-repeat="grade in gradeList" value="{{grade.id}}">{{grade.name}}</option>
+					</select>
+				</div>
+
+				<div style="margin: 15px 0;">
+				<div class="alert alert-warning alert-dismissable" ng-show="errorShow">
+					<button type="button" class="close" ng-click="toggleError()">×</button>
+					<h4 style="margin-bottom: 0;" class="{{tr}}" > <span ng-repeat="m in errorMessage"><i class="icon fa fa-warning"></i> <d>Alert</d> {{m.field}} - {{m.content}} {{m.extra}}</span></h4>
+
+				</div>
+			</div>
+				<div class="small-box bg-green">
+					<div class="inner">
+					<h3>20<sup style="font-size: 20px">Question</sup></h3>
+						<p>In 60 min</p>
+					</div>
+					<div class="icon">
+						<i class="fa fa-clock-o"></i>
+					</div>
+					<a href="" class="small-box-footer" style="font-size: 45px;" ng-click="generateQuiz()">
+						START <i class="fa fa-arrow-circle-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+</section>
+
+

@@ -1,0 +1,76 @@
+<section class="content ng-scope" id="printThis" ng-init="list()">
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<d>Question</d>
+			<a href="#/question/add"><button class="btnAdd"><d>Add</d></button></a>
+
+		</div>
+		<table class="table table-bordered table-striped dataTable">
+			<thead>
+				<tr>
+					<th class="{{checkSort('id')}}" id="id" ng-click="sorting('id')"><d>id</d></th>
+					<th class="{{checkSort('id_grade')}}" id="id_grade" ng-click="sorting('id_grade')"><d>grade</d></th>
+					<th class="{{checkSort('id_lecture')}}" id="id_lecture" ng-click="sorting('id_lecture')"><d>lecture</d></th>
+					<th class="{{checkSort('difficulty')}}" id="difficulty" ng-click="sorting('difficulty')"><d>difficulty</d></th>
+					<th class="{{checkSort('content')}}" id="content" ng-click="sorting('content')"><d>content</d></th>
+					<th  id="image" ><d>image</d></th>
+					<th><d>action</d></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in questionList">
+					<td>{{item.id}}</td>
+					<td>{{item.grade}}</td>
+					<td>{{item.lecture}}</td>
+					<td>{{item.difficulty}}</td>
+					<td>{{item.content}}</td>
+					<td>{{item.image}}</td>
+					<td>
+						<button class="btn btn-warning btn-xs noPrint"  ng-click="edit(item)"><d>edit<default/d></button>
+						<button class="btn btn-danger btn-xs noPrint" data-toggle="modal" data-target="#appModal" ng-click="delete(item)"><d>delete</d></button>
+					</td>
+				</tr>
+			</table>
+
+			<div class="panel-body">
+				<div class="alert alert-danger" ng-repeat="er in errorlist">Error: {{er.content}}</div>
+			</div>
+
+			<pagination></pagination>
+
+
+		</div>
+	</section>
+
+
+	<div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="DiakoModal">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="appModalLabel">{{modalTitle}}</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="name" class="control-label"><d>name</d>:</label>
+							<input type="text" class="form-control" id="name" ng-model="modal.name">
+						</div>
+						<div class="form-group">
+							<label for="detail" class="control-label"><d>detail</d>:</label>
+							<input type="text" class="form-control" id="detail" ng-model="modal.detail">
+						</div>
+					</form>
+					<div>
+						<p ng-repeat="m in errorMessage" class="bg-warning modalError">{{dic(m.field)}} - {{dic(m.content)}} {{m.extra}}</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><d>close</d></button>
+					<button type="button" class="btn btn-primary" ng-click="saveModal()" ng-hide="modalType == 'delete'"><d>save</d></button>
+					<button type="button" class="btn btn-danger" ng-click="saveModal()" ng-show="modalType == 'delete'"><d>delete</d></button>
+				</div>
+			</div>
+		</div>
+	</div>

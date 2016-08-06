@@ -1,0 +1,98 @@
+<section class="content ng-scope" id="printThis">
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<d>User</d>
+			<button class="btnAdd" ng-click="add()"><d>Add</d></button>
+
+		</div>
+
+		<table class="table table-bordered table-striped dataTable">
+			<thead>
+				<tr>
+					<th class="{{checkSort('id')}}" id="id" ng-click="sorting('id')"><d>id</d></th>
+					<th class="{{checkSort('name')}}" id="name" ng-click="sorting('name')"><d>name</d></th>
+					<th class="{{checkSort('username')}}" id="username" ng-click="sorting('username')"><d>username</d></th>
+					<th class="{{checkSort('id_perm')}}" id="id_perm" ng-click="sorting('id_perm')"><d>perm</d></th>
+					<th class="{{checkSort('phone')}}" id="phone" ng-click="sorting('phone')"><d>phone</d></th>
+					<th class="{{checkSort('email')}}" id="email" ng-click="sorting('email')"><d>email</d></th>
+					<th  id="detail" ><d>detail</d></th>
+					<th><d>action</d></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in userList">
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.username}}</td>
+					<td>{{item.perm}}</td>
+					<td>{{item.phone}}</td>
+					<td>{{item.email}}</td>
+					<td>{{item.detail}}</td>
+					<td>
+						<button class="btn btn-warning btn-xs noPrint" data-toggle="modal" data-target="#appModal" ng-click="edit(item)"><d>edit<default/d></button>
+						<button class="btn btn-danger btn-xs noPrint" data-toggle="modal" data-target="#appModal" ng-click="delete(item)"><d>delete</d></button>
+					</td>
+				</tr>
+			</table>
+
+			<div class="panel-body">
+				<div class="alert alert-danger" ng-repeat="er in errorlist">Error: {{er.content}}</div>
+			</div>
+
+			<pagination></pagination>
+		</div>
+	</section>
+	<div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="DiakoModal">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="appModalLabel">{{modalTitle}}</h4>
+				</div>
+				<div class="modal-body">
+
+					<form>
+						<div class="form-group">
+							<label for="name" class="control-label"><d>name</d>:</label>
+							<input type="text" class="form-control" id="name" ng-model="modal.name">
+						</div>
+						<div class="form-group">
+							<label for="username" class="control-label"><d>username</d>:</label>
+							<input type="text" class="form-control" id="username" ng-model="modal.username">
+						</div>
+						<div class="form-group">
+							<label for="password" class="control-label"><d>password</d>:</label>
+							<input type="password" class="form-control" id="password" ng-model="modal.newPass">
+						</div>
+						<div class="form-group">
+							<label for="grade" class="control-label"><d>perm</d>:</label>
+							<select class="form-control" id="perm" ng-model="modal.id_perm">
+								<option ng-repeat="perm in permList" value="{{perm.id}}">{{perm.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="phone" class="control-label"><d>phone</d>:</label>
+							<input type="text" class="form-control" id="phone" ng-model="modal.phone">
+						</div>
+						<div class="form-group">
+							<label for="email" class="control-label"><d>email</d>:</label>
+							<input type="text" class="form-control" id="email" ng-model="modal.email">
+						</div>
+						<div class="form-group">
+							<label for="detail" class="control-label"><d>detail</d>:</label>
+							<input type="text" class="form-control" id="detail" ng-model="modal.detail">
+						</div>
+					</form>
+					<div>
+						<p ng-repeat="m in errorMessage" class="bg-warning modalError">{{dic(m.field)}} - {{dic(m.content)}} {{m.extra}}</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><d>close</d></button>
+					<button type="button" class="btn btn-primary" ng-click="saveModal()" ng-hide="modalType == 'delete'"><d>save</d></button>
+					<button type="button" class="btn btn-danger" ng-click="saveModal()" ng-show="modalType == 'delete'"><d>delete</d></button>
+				</div>
+			</div>
+		</div>
+	</div>

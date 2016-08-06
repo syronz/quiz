@@ -1,0 +1,47 @@
+<section class="content ng-scope" id="printThis">
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<d>Quiz In Progress</d>
+			<button class="btnAdd">{{rTime}}</button>
+		</div>
+		<div class="panel-body">
+
+		<section>
+			<div class="col-md-4">
+				<p><span><d>ID</d></span>: {{quizData.data.quizInfo.idQuiz}}</p>
+				<p><span><d>User</d></span>: {{quizData.data.quizInfo.user}}</p>
+			</div>
+			<div class="col-md-4">
+				<p><span><d>Lecture</d></span>: {{quizData.data.quizInfo.lecture}}</p>
+				<p><span><d>Grade</d></span>: {{quizData.data.quizInfo.grade}}</p>
+			</div>
+			<div class="col-md-4">
+				<p><span><d>Start</d></span>: {{quizData.data.quizInfo.start}}</p>
+				<p><span><d>Duration</d></span>: {{quizData.data.quizInfo.duration}} min</p>
+			</div>
+		</section>
+
+		<section>
+			<div ng-repeat="q in quizData.data.quizQuestion" class="questionProgress col-md-12">
+				<pre>{{$index+1}}- {{q.content}}</pre>
+				<div class="imageProgress" ng-hide="{{q.image == ''}}"><img ng-src="dist/question/{{q.image}}"></div>
+				<p class="pre answerProgress"><input type="radio" name="q{{q.id}}" id="a1{{q.id}}" ng-model="q.result" value="1"> <label for="a1{{q.id}}">A. {{q.a1}}</label></p>
+				<p class="pre answerProgress"><input type="radio" name="q{{q.id}}" id="a2{{q.id}}" ng-model="q.result" value="2"> <label for="a2{{q.id}}">B. {{q.a2}}</label></p>
+				<p class="pre answerProgress"><input type="radio" name="q{{q.id}}" id="a3{{q.id}}" ng-model="q.result" value="3"> <label for="a3{{q.id}}">C. {{q.a3}}</label></p>
+				<p class="pre answerProgress"><input type="radio" name="q{{q.id}}" id="a4{{q.id}}" ng-model="q.result" value="4"> <label for="a4{{q.id}}">D. {{q.a4}}</label></p>
+			</div>
+
+			<div class="col-md-4 col-md-offset-4" ng-show="quizData.data.quizQuestion">
+				<button class="btn btn-block btn-success" ng-click="submitQuiz()"><d>Submit Your Exam</d></button>
+			</div>
+		</section>
+			
+		</div>
+
+
+
+	</div>
+</section>
+
+

@@ -1,0 +1,198 @@
+<section class="content ng-scope" id="printThis" ng-init="getQuestion()">
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<a href="#question/1/25/id/asc"><d>Questions</d> / </a><d>Add Question</d>
+		</div>
+		<div class="panel-body">
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="lecture" class="control-label"><d>lecture</d>:</label>
+					<select class="form-control" id="lecture" ng-model="question.id_lecture">
+						<option ng-repeat="lecture in lectureList" value="{{lecture.id}}">{{lecture.name}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="grade" class="control-label"><d>Grade</d>:</label>
+					<select class="form-control" id="grade" ng-model="question.id_grade">
+						<option ng-repeat="grade in gradeList" value="{{grade.id}}">{{grade.name}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="star" class="control-label"><d>Star</d>:</label>
+					<select class="form-control" id="star" ng-model="question.star">
+						<option value="1" selected="selected">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+					<label for="Content" class="control-label"><d>Content</d>:</label>
+					<textarea class="form-control" ng-model="question.content" rows="9"></textarea>
+				</div>
+			</div> 
+
+			<div class="form-group col-md-4 col-md-offset-4" >
+				<button class="btn btn-block btn-success" ng-click="saveChanges()">Save Changes</button>
+			</div>
+
+			<div class="col-md-12">				
+				<div class="panel-heading">
+					<d>Answers</d>
+					<button class="btnAdd btn btn-default" ng-click="addAnswer()"><d>Add</d></button>
+				</div>
+				<table class="table table-bordered table-striped dataTable">
+					<thead>
+						<tr>
+							<th id="id"><d>id</d></th>
+							<th id="result"><d>result</d></th>
+							<th id="content" ><d>content</d></th>
+							<th><d>action</d></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in answerList">
+							<td>{{item.id}}</td>
+							<td>{{item.result}}</td>
+							<td class="white-space: pre-wrap;word-wrap: break-word;"><pre><code>{{item.content}}</code></pre></td>
+							<td>
+								<button class="btn btn-warning btn-xs noPrint" data-toggle="modal" data-target="#appModal" ng-click="editAnswer(item)"><d>edit<default/d></button>
+								<button class="btn btn-danger btn-xs noPrint" data-toggle="modal" data-target="#appModal" ng-click="deleteAnswer(item)"><d>delete</d></button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+
+
+			<div class="col-md-12">
+				<div class="alert alert-warning alert-dismissable" ng-show="errorShow">
+					<button type="button" class="close" ng-click="toggleError()">×</button>
+					<h4 style="margin-bottom: 0;" class="{{tr}}" ><i class="icon fa fa-warning"></i> <d>Alert</d> <span ng-repeat="m in errorMessage">{{dic(m.field)}} - {{dic(m.content)}} {{m.extra}}</span></h4>
+
+				</div>
+			</div>
+
+
+			<div class="col-md-10 col-md-offset-1" ng-show="question.image" style="margin-top:15px;">
+				<h3 style="text-align:center;"><d>Image Of Question</d></h3>
+				<div class="col-md-7">
+					<img ng-src="dist/question/{{question.image}}" style="max-width:400px;">	
+				</div>
+				<div class="col-md-5">
+				<button class="btn btn-danger btn-md" ng-click="deleteImage()"><d>Delete_Image</d></button>
+				</div>
+			</div>
+
+
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-3">
+						<h3>Select files</h3>
+						<input type="file" nv-file-select="" uploader="uploader" multiple  /><br/>
+					</div>
+					<div class="col-md-9" style="margin-bottom: 40px">
+						<h3>The queue</h3>
+						<p>Queue length: {{ uploader.queue.length }}</p>
+						<table class="table">
+							<thead>
+								<tr>
+									<th width="50%">Name</th>
+									<th ng-show="uploader.isHTML5">Size</th>
+									<th ng-show="uploader.isHTML5">Progress</th>
+									<th>Status</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in uploader.queue">
+									<td>
+										<strong>{{ item.file.name }}</strong>
+										<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+									</td>
+									<td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+									<td ng-show="uploader.isHTML5">
+										<div class="progress" style="margin-bottom: 0;">
+											<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+										</div>
+									</td>
+									<td class="text-center">
+										<span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+										<span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+										<span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+									</td>
+									<td nowrap>
+										<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+											<span class="glyphicon glyphicon-upload"></span> Upload
+										</button>
+										<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+											<span class="glyphicon glyphicon-ban-circle"></span> Cancel
+										</button>
+										<button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+											<span class="glyphicon glyphicon-trash"></span> Remove
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+
+
+	</div>
+</section>
+
+
+<div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="DiakoModal">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="appModalLabel">{{modalTitle}}</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="result" class="control-label"><d>result</d>:</label>
+							<select id="result" ng-model="modal.result">
+								<option value="0">False</option>
+								<option value="1">True</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="detail" class="control-label"><d>Content</d>:</label>
+							<textarea class="form-control ng-pristine ng-touched" ng-model="modal.content" rows="8"></textarea>
+						</div>
+					</form>
+					<div>
+						<p ng-repeat="m in errorMessage" class="bg-warning modalError">{{dic(m.field)}} - {{dic(m.content)}} {{m.extra}}</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><d>close</d></button>
+					<button type="button" class="btn btn-primary" ng-click="saveModal()" ng-hide="modalType == 'deleteAnswer'"><d>save</d></button>
+					<button type="button" class="btn btn-danger" ng-click="saveModal()" ng-show="modalType == 'deleteAnswer'"><d>delete</d></button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+

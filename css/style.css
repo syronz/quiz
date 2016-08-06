@@ -1,0 +1,79 @@
+.centerAlign{
+	text-align: center;
+}
+
+.pagination {
+	margin: 0 0 -5px 0;
+	padding: 0;
+}
+.panel-footer {
+	padding: 3px;
+}
+.list-group {
+	/*min-height: 550px;*/
+}
+.jtable_text {
+	display:inline-block;
+	vertical-align: top;
+	padding: 7px 2px 0 5px;
+	font-size: smaller;
+	color: #555;
+	font-family: courier;
+}
+.jtable_select {
+	vertical-align: top;
+	margin-top: 1px;
+	background-color: #fff;
+	padding: 3px;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	color: #428bca;
+}
+.float_right {
+	float: right;
+}
+.alert {
+	margin-bottom: 0;
+}
+
+.btnAdd{
+	float: right;
+	margin-top: -3px;
+}
+
+.pre {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.answerProgress{
+	padding-left: 20px;
+}
+
+.questionProgress{
+    margin-bottom: 40px;
+}
+
+.imageProgress{
+	text-align: center;
+    padding: 20px;
+}
+
+.imageProgress img{
+	max-width: 95%;
+}
+
+.rightAnswer{
+	border: 2px solid green;
+	border-radius: 5px;
+	padding-top: 6px;
+}
+
+.wrongAnswer{
+	border: 2px solid red;
+	border-radius: 5px;
+	padding-top: 6px;
+}
+    

@@ -1,0 +1,55 @@
+<section class="content ng-scope" id="printThis">
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<d>Quiz In Progress</d>
+		</div>
+		<div class="panel-body">
+
+		<section>
+			<div class="col-md-4">
+				<p><span><d>ID</d></span>: {{quizData.data.quizInfo.idQuiz}}</p>
+				<p><span><d>User</d></span>: {{quizData.data.quizInfo.user}}</p>
+			</div>
+			<div class="col-md-4">
+				<p><span><d>Lecture</d></span>: {{quizData.data.quizInfo.lecture}}</p>
+				<p><span><d>Grade</d></span>: {{quizData.data.quizInfo.grade}}</p>
+			</div>
+			<div class="col-md-4">
+				<p><span><d>Start</d></span>: {{quizData.data.quizInfo.start}}</p>
+				<p><span><d>Duration</d></span>: {{quizData.data.quizInfo.duration}} min</p>
+			</div>
+
+			<div class="col-md-8 col-md-offset-2" style="text-align:center;border:2px solid gray;margin-bottom:20px;border-radius:10px;padding-bottom:15px;">
+				<h1>Result: {{quizData.data.quizInfo.result}}%</h1>
+				<h1>Your Time: {{quizData.data.quizInfo.sTime}}</h1>
+			</div>
+
+		</section>
+
+		<section>
+			<div ng-repeat="q in quizData.data.quizQuestion" class="questionProgress col-md-12">
+				<pre>{{$index+1}}- {{q.content}}</pre>
+				<div class="imageProgress" ng-hide="{{q.image == ''}}"><img ng-src="dist/question/{{q.image}}"></div>
+
+				<p><label><d>Your Answer</d>:</label> {{answers[q.selected]}}</p>
+
+				<p class="pre answerProgress" ng-class="q.c1"><label>A. {{q.a1}}</label></p>
+				<p class="pre answerProgress" ng-class="q.c2"><label>B. {{q.a2}}</label></p>
+				<p class="pre answerProgress" ng-class="q.c3"><label>C. {{q.a3}}</label></p>
+				<p class="pre answerProgress" ng-class="q.c4"><label>D. {{q.a4}}</label></p>
+			</div>
+
+			<div class="col-md-4 col-md-offset-4">
+				<button class="btn btn-block btn-success" ng-click="submitQuiz()"><d>Submit Your Exam</d></button>
+			</div>
+		</section>
+			
+		</div>
+
+
+
+	</div>
+</section>
+
+
